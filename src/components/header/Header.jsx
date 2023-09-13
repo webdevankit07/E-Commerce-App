@@ -12,7 +12,7 @@ const Header = () => {
         if (window.scrollY < lastScrollY) {
             setShow('show');
         } else {
-            setShow('');
+            setShow('hide');
         }
     };
 
@@ -25,29 +25,36 @@ const Header = () => {
 
     return (
         <MainHeader>
-            {/* <div className={`${show}`}> */}
-            <Link to={'/'}>
-                <img src='/public/images/logo.png' alt='logo' />
-            </Link>
-            <Nav />
-            {/* </div> */}
+            <div className={`${show} main`}>
+                <Link to={'/'}>
+                    <img src='/public/images/logo.png' alt='logo' />
+                </Link>
+                <Nav />
+            </div>
         </MainHeader>
     );
 };
 
 const MainHeader = styled.header`
-    padding: 0 4.8rem;
-    height: 10rem;
-    background-color: ${({ theme }) => theme.colors.bg};
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
+    .main {
+        position: fixed;
+        width: 100%;
+        padding: 0 4.8rem;
+        height: 10rem;
+        background-color: ${({ theme }) => theme.colors.bg};
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 999;
+        transition: all 0.3s ease;
+    }
 
-    /* .show {
-        position: sticky;
+    .show {
         top: 0;
-    } */
+    }
+    .hide {
+        top: -100px;
+    }
 
     .logo {
         height: 5rem;
