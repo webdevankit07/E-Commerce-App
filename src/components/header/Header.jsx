@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Nav from './navbar/Nav';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 const Header = () => {
     const [show, setShow] = useState('');
     const [lastScrollY, setLastScrollY] = useState();
+    const location = useLocation();
 
     const controlNavbar = () => {
         setLastScrollY(window.scrollY);
@@ -22,6 +23,8 @@ const Header = () => {
             window.removeEventListener('scroll', controlNavbar);
         };
     }, [lastScrollY]);
+
+    useEffect(() => window.scrollTo(0, 0), [location]);
 
     return (
         <MainHeader>

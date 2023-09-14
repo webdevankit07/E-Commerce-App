@@ -34,7 +34,7 @@ HeroSection.propTypes = {
 };
 
 const Wrapper = styled.section`
-    padding: 25rem 0 8rem 0;
+    padding: 22rem 0;
 
     img {
         min-width: 10rem;
