@@ -1,10 +1,15 @@
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SingleProduct = () => {
+    const { id } = useParams();
+    console.log(id);
     return <Wrapper className='singleProduct-wrapper'>SingleProduct</Wrapper>;
 };
 
 const Wrapper = styled.section`
+    padding: 20rem 0 0 0;
+
     .container {
         padding: 9rem 0;
     }

@@ -17,7 +17,7 @@ export const getProducts = createAsyncThunk('getProducts', async (rejectWithValu
 const products = createSlice({
     name: 'products',
     initialState: {
-        isLoading: false,
+        isLoading: true,
         isError: false,
         products: [],
         featureProducts: [],
