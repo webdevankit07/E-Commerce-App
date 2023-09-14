@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button } from '../../components_Styled/Button';
+import { Button } from '../components_Styled/Button';
 import { FaDiscord, FaGithub, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {

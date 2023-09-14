@@ -1,4 +1,4 @@
-import HeroSection from '../../components/heroSection/HeroSection';
+import HeroSection from '../components/HeroSection';
 
 const About = () => {
     return <HeroSection name={`Ankit Ecommerce`} />;

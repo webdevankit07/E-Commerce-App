@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button } from '../../components_Styled/Button';
+import { Button } from '../components_Styled/Button';
 import { Link } from 'react-router-dom';
 
 const ErrorPage = () => {

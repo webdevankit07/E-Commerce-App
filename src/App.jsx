@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/home/Home';
-import About from './pages/about/About';
-import Products from './pages/products/Products';
-import Contact from './pages/contact/Contact';
-import SingleProduct from './pages/singleProduct/SingleProduct';
-import Cart from './pages/cart/Cart';
-import ErrorPage from './pages/errorPage/ErrorPage';
+import Home from './pages/Home';
+import About from './pages/About';
+import Products from './pages/Products';
+import Contact from './pages/Contact';
+import SingleProduct from './pages/SingleProduct';
+import Cart from './pages/Cart';
+import ErrorPage from './pages/ErrorPage';
 import Header from './components/header/Header';
 import { GlobalStyle } from './GlobalStyle';
-import Footer from './components/footer/Footer';
+import Footer from './components/Footer';
 
 const App = () => {
     return (

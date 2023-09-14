@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button } from '../../components_Styled/Button';
+import { Button } from '../components_Styled/Button';
 
 const HeroSection = ({ name }) => {
     return (
