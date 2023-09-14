@@ -1,5 +1,5 @@
 import HeroSection from '../components/HeroSection';
-import Services from '../components/services/Services';
+import Services from '../components/Services';
 import Trusted from '../components/Trusted';
 
 const Home = () => {
