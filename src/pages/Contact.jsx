@@ -21,7 +21,7 @@ const Contact = () => {
 };
 
 const Wrapper = styled.section`
-    padding: 9rem 0 5rem 0;
+    padding: 12rem 0 5rem 0;
     text-align: center;
 
     .container {
