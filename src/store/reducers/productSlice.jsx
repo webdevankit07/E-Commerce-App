@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const PRODUCTS_API = 'https://api.pujakaitem.com/api/products';
+const PRODUCTS_API = import.meta.env.VITE_PRODUCT_API_KEY;
 
 //! fetching all products from api...
 export const getProducts = createAsyncThunk('getProducts', async (rejectWithValue) => {
@@ -14,6 +14,16 @@ export const getProducts = createAsyncThunk('getProducts', async (rejectWithValu
     }
 });
 
+//! fetching Single product from api...
+export const getSingleProduct = createAsyncThunk('getSingleProduct', async (id, { rejectWithValue }) => {
+    try {
+        const { data } = await axios.get(`${PRODUCTS_API}?id=${id}`);
+        return data;
+    } catch (error) {
+        return rejectWithValue(error);
+    }
+});
+
 const products = createSlice({
     name: 'products',
     initialState: {
@@ -21,6 +31,7 @@ const products = createSlice({
         isError: false,
         products: [],
         featureProducts: [],
+        singleProduct: {},
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -34,6 +45,17 @@ const products = createSlice({
                 state.featureProducts = payload.featureData;
             })
             .addCase(getProducts.rejected, (state, { payload }) => {
+                state.isLoading = false;
+                state.isError = payload;
+            })
+            .addCase(getSingleProduct.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(getSingleProduct.fulfilled, (state, { payload }) => {
+                state.isLoading = false;
+                state.singleProduct = payload;
+            })
+            .addCase(getSingleProduct.rejected, (state, { payload }) => {
                 state.isLoading = false;
                 state.isError = payload;
             });
