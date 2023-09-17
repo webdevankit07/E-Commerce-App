@@ -2,19 +2,10 @@ import styled from 'styled-components';
 import { BsFillGridFill, BsList } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { setGridView, sorting } from '../store/reducers/filterProductSlice';
-import { useEffect, useState } from 'react';
 
 const Sort = () => {
     const { grid_view, filterProducts } = useSelector((state) => state.filterProducts);
-    const [value, setValue] = useState('');
     const dispatch = useDispatch();
-
-    //! Function for sorting...
-    const handleChange = (e) => setValue(e.target.value);
-
-    useEffect(() => {
-        dispatch(sorting(value));
-    }, [value, dispatch]);
 
     return (
         <Wrapper className='sort-section'>
@@ -31,7 +22,7 @@ const Sort = () => {
             </div>
             <div className='sort-selection'>
                 <form action='#' htmlFor='sort'>
-                    <select className='sort-selection--style' name='sort' id='sort' onChange={handleChange}>
+                    <select className='sort-selection--style' name='sort' id='sort' onChange={(e) => dispatch(sorting(e.target.value))}>
                         <option value='lowest'>Price(lowest)</option>
                         <option value='#' disabled></option>
                         <option value='highest'>Price(highest)</option>

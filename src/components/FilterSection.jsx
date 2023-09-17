@@ -1,7 +1,65 @@
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { updateFilterValue } from '../store/reducers/filterProductSlice';
+import { useEffect } from 'react';
 
 const FilterSection = () => {
-    return <Wrapper>FilterSection</Wrapper>;
+    const {
+        filters: { text },
+        allProducts,
+    } = useSelector((state) => state.filterProducts);
+    const dispatch = useDispatch();
+
+    //! Unique Data function..
+    const getUniqueData = (data, property) => {
+        const newVal = data.map((elem) => {
+            return elem[property];
+        });
+        return ['All', ...new Set(newVal)];
+    };
+    const categoryData = getUniqueData(allProducts, 'category');
+    const companyData = getUniqueData(allProducts, 'company');
+    const colorsData = getUniqueData(allProducts, 'colors');
+
+    useEffect(() => {
+        dispatch(updateFilterValue());
+    }, [dispatch]);
+
+    return (
+        <Wrapper>
+            <div className='filter-search'>
+                <form onSubmit={(e) => e.preventDefault()}>
+                    <input autoComplete='off' type='text' name='text' value={text} placeholder='search' onChange={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))} />
+                </form>
+            </div>
+            <div className='filter-category'>
+                <h3>Category</h3>
+                <div>
+                    {categoryData.map((category, i) => {
+                        return (
+                            <button key={i} type='button' value={category} name='category' onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}>
+                                {category}
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+            <div className='filter-company'>
+                <h3>Company</h3>
+                <form action='#'>
+                    <select name='company' id='company' className='filter-company--select' onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}>
+                        {companyData.map((company, i) => {
+                            return (
+                                <option value={company} key={i}>
+                                    {company}
+                                </option>
+                            );
+                        })}
+                    </select>
+                </form>
+            </div>
+        </Wrapper>
+    );
 };
 
 const Wrapper = styled.section`

@@ -20,6 +20,7 @@ GridView.propTypes = {
 
 const Wrapper = styled.section`
     padding: 5rem 0;
+    min-height: 80vh;
 
     .container {
         max-width: 120rem;
