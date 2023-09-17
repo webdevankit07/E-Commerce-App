@@ -72,7 +72,7 @@ const Footer = () => {
                     <hr />
                     <div className='container'>
                         <div className='grid grid-two-column'>
-                            <p>@{new Date().getFullYear()} ThapaTechnical. All Rights Reserved</p>
+                            <p>@{new Date().getFullYear()} Ankit Store. All Rights Reserved</p>
                             <div>
                                 <p>PRIVACY POLICY</p>
                                 <p>TERMS & CONDITIONS</p>

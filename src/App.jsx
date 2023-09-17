@@ -11,15 +11,21 @@ import Header from './components/header/Header';
 import { GlobalStyle } from './GlobalStyle';
 import Footer from './components/Footer';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from './store/reducers/productSlice';
+import { setFilterProducts } from './store/reducers/filterProductSlice';
 
 const App = () => {
+    const { products } = useSelector((state) => state.productsDetails);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getProducts());
     }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(setFilterProducts(products));
+    }, [dispatch, products]);
 
     const theme = {
         colors: {

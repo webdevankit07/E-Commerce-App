@@ -3,23 +3,23 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 const MyImage = ({ images }) => {
-    const [img, setImg] = useState(images[0]);
+    const [imgId, setImgId] = useState(0);
     return (
         images && (
             <Wrapper>
                 <div className='grid grid-four-column'>
-                    {images.map((image) => {
+                    {images.map((image, i) => {
                         const { id, url, filename } = image;
                         return (
                             <figure key={id}>
-                                <img src={url} alt={filename} className='box-imagr--style' onClick={() => setImg(image)} />
+                                <img src={url} alt={filename} className='box-imagr--style' onClick={() => setImgId(i)} />
                             </figure>
                         );
                     })}
                 </div>
 
                 <div className='main-screen'>
-                    <img src={img.url} alt={img.filename} />
+                    <img src={images[`${imgId}`].url} alt={images[`${imgId}`].filename} />
                 </div>
             </Wrapper>
         )

@@ -9,6 +9,8 @@ import { Container } from '../components_Styled/Container';
 import FormatPrice from '../Helpers/FormatPrice';
 import { TbReplace, TbTruckDelivery } from 'react-icons/tb';
 import { MdSecurity } from 'react-icons/md';
+import ReactStars from 'react-stars';
+import AddToCart from '../components/AddToCart';
 // import PageNavigation from '../components/PageNavigation';
 
 const SingleProduct = () => {
@@ -19,7 +21,7 @@ const SingleProduct = () => {
     useEffect(() => {
         dispatch(getSingleProduct(Id));
     }, [dispatch, Id]);
-    const { id, name, company, price, description, category, stock, stars, reviews, image } = singleProduct;
+    const { id, name, company, price, description, stock, stars, reviews, image } = singleProduct;
 
     if (isLoading) {
         return (
@@ -44,8 +46,9 @@ const SingleProduct = () => {
                     {/* Product Data  */}
                     <div className='product-data'>
                         <h2>{name}</h2>
-                        <p>{stars}</p>
-                        <p>{reviews}</p>
+                        <p className='flex gap-5 items-center'>
+                            <ReactStars count={5} value={stars} half={true} edit={false} size={20} color2={'#ffd700'} />({reviews} Customer reviews)
+                        </p>
                         <p className='product-data-price'>
                             MRP:
                             <del>
@@ -85,6 +88,8 @@ const SingleProduct = () => {
                                 Brand: <span>{company}</span>
                             </p>
                         </div>
+                        <hr />
+                        {stock > 0 && <AddToCart product={singleProduct} />}
                     </div>
                 </div>
             </Container>
@@ -128,7 +133,7 @@ const Wrapper = styled.section`
 
                 .warranty-icon {
                     display: inline-block;
-                    background-color: rgba(220, 220, 220, 0.5);
+                    background-color: rgba(220, 220, 220, 0);
                     border-radius: 50%;
                     width: 4rem;
                     height: 4rem;

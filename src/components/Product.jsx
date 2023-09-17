@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import FormatPrice from '../Helpers/FormatPrice';
-
 const Product = (currElem) => {
     const { id, name, image, price, category } = currElem;
     return (
