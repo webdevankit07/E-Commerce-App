@@ -4,10 +4,13 @@ import { CgMenu, CgClose } from 'react-icons/cg';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import { useAuth0 } from '@auth0/auth0-react';
+import { Button } from '../../../components_Styled/Button';
 
 const Nav = () => {
     const { total_item } = useSelector((state) => state.cart);
     const [menuIcon, setMenuIcon] = useState(false);
+    const { user, loginWithRedirect, isAuthenticated, logout } = useAuth0();
 
     return (
         <NavBar>
@@ -33,6 +36,8 @@ const Nav = () => {
                             Contact
                         </Link>
                     </li>
+                    {isAuthenticated && <p>{user.name}</p>}
+                    <li>{isAuthenticated ? <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log Out</Button> : <Button onClick={() => loginWithRedirect()}>Log In</Button>}</li>
                     <li>
                         <Link to={'/cart'} className='navbar-link cart-trolley--link'>
                             <FiShoppingCart className='cart-trolley' />
@@ -100,8 +105,8 @@ const NavBar = styled.nav`
         }
 
         .cart-total--item {
-            min-height: 2rem;
-            min-width: 2rem;
+            min-height: 2.3rem;
+            min-width: 2.3rem;
             padding: 0.35rem;
             font-size: 1.3rem;
             position: absolute;
