@@ -100,6 +100,8 @@ const NavBar = styled.nav`
         }
 
         .cart-total--item {
+            min-height: 2rem;
+            min-width: 2rem;
             padding: 0.35rem;
             font-size: 1.3rem;
             position: absolute;

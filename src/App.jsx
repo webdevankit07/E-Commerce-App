@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from './store/reducers/productSlice';
 import { setFilterProducts } from './store/reducers/filterProductSlice';
-import { addFromLocalStorage } from './store/reducers/cartSlice';
+import { addFromLocalStorage, updateTotal } from './store/reducers/cartSlice';
 
 const App = () => {
     const { products } = useSelector((state) => state.productsDetails);
@@ -23,6 +23,7 @@ const App = () => {
     useEffect(() => {
         dispatch(getProducts());
         dispatch(addFromLocalStorage());
+        dispatch(updateTotal());
     }, [dispatch]);
 
     useEffect(() => {
