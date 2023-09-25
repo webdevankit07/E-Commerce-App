@@ -8,12 +8,13 @@ import SingleProduct from './pages/SingleProduct';
 import Cart from './pages/Cart';
 import ErrorPage from './pages/ErrorPage';
 import Header from './components/header/Header';
-import { GlobalStyle } from './GlobalStyle';
 import Footer from './components/Footer';
+import { GlobalStyle } from './GlobalStyle';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from './store/reducers/productSlice';
 import { setFilterProducts } from './store/reducers/filterProductSlice';
+import { addFromLocalStorage } from './store/reducers/cartSlice';
 
 const App = () => {
     const { products } = useSelector((state) => state.productsDetails);
@@ -21,6 +22,7 @@ const App = () => {
 
     useEffect(() => {
         dispatch(getProducts());
+        dispatch(addFromLocalStorage());
     }, [dispatch]);
 
     useEffect(() => {

@@ -5,11 +5,14 @@ import { FaCheck } from 'react-icons/fa';
 import CartAmountToggle from './CartAmountToggle';
 import { Link } from 'react-router-dom';
 import { Button } from '../components_Styled/Button';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../store/reducers/cartSlice';
 
 const AddToCart = ({ product }) => {
     const { id, colors, stock } = product;
     const [color, setColor] = useState(colors[0]);
     const [amount, setAmount] = useState(1);
+    const dispatch = useDispatch();
 
     const setIncrease = () => setAmount((prev) => (prev < stock ? prev + 1 : prev));
     const setDecrease = () => setAmount((prev) => (prev > 1 ? prev - 1 : prev));
@@ -31,7 +34,7 @@ const AddToCart = ({ product }) => {
 
             {/* Add to Cart  */}
             <CartAmountToggle amount={amount} setDecrease={setDecrease} setIncrease={setIncrease} />
-            <Link to={'/cart'}>
+            <Link to={'/cart'} onClick={() => dispatch(addToCart({ id, color, amount, product }))}>
                 <Button className='btn'>Add to Cart</Button>
             </Link>
         </Wrapper>

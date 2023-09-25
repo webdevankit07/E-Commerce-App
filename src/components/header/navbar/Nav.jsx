@@ -3,8 +3,10 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { CgMenu, CgClose } from 'react-icons/cg';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 const Nav = () => {
+    const { total_item } = useSelector((state) => state.cart);
     const [menuIcon, setMenuIcon] = useState(false);
 
     return (
@@ -34,7 +36,7 @@ const Nav = () => {
                     <li>
                         <Link to={'/cart'} className='navbar-link cart-trolley--link'>
                             <FiShoppingCart className='cart-trolley' />
-                            <span className='cart-total--item'>10</span>
+                            <span className='cart-total--item'>{total_item}</span>
                         </Link>
                     </li>
                 </ul>
@@ -98,14 +100,12 @@ const NavBar = styled.nav`
         }
 
         .cart-total--item {
+            padding: 0.35rem;
             font-size: 1.3rem;
-            padding: 0.4rem;
             position: absolute;
             background-color: #000;
-            color: #000;
+            color: #fff;
             border-radius: 50%;
-            display: grid;
-            place-items: center;
             top: -20%;
             left: 70%;
             background-color: ${({ theme }) => theme.colors.helper};

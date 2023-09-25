@@ -1,21 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { updateFilterValue } from '../store/reducers/filterProductSlice';
+import { clearFilters, updateFilterValue } from '../store/reducers/filterProductSlice';
+import { FaCheck } from 'react-icons/fa';
+import FormatPrice from '../Helpers/FormatPrice';
 import { useEffect } from 'react';
+import { Button } from '../components_Styled/Button';
 
 const FilterSection = () => {
     const {
-        filters: { text },
         allProducts,
+        filters: { text, category, company, color, price, maxPrice },
     } = useSelector((state) => state.filterProducts);
     const dispatch = useDispatch();
 
-    //! Unique Data function..
-    const getUniqueData = (data, property) => {
+    //! Find Unique_Data from ALl_Products...
+    const getUniqueData = (data, attr) => {
         const newVal = data.map((elem) => {
-            return elem[property];
+            return elem[attr];
         });
-        return ['All', ...new Set(newVal)];
+
+        return attr === 'colors' ? ['All', ...new Set(newVal.flat(2))] : ['All', ...new Set(newVal)];
     };
     const categoryData = getUniqueData(allProducts, 'category');
     const companyData = getUniqueData(allProducts, 'company');
@@ -23,7 +27,7 @@ const FilterSection = () => {
 
     useEffect(() => {
         dispatch(updateFilterValue());
-    }, [dispatch]);
+    }, [dispatch, text, category, company, color, price, maxPrice]);
 
     return (
         <Wrapper>
@@ -35,10 +39,10 @@ const FilterSection = () => {
             <div className='filter-category'>
                 <h3>Category</h3>
                 <div>
-                    {categoryData.map((category, i) => {
+                    {categoryData.map((currCategory, i) => {
                         return (
-                            <button key={i} type='button' value={category} name='category' onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}>
-                                {category}
+                            <button key={i} type='button' className={currCategory === category && 'active'} value={currCategory} name='category' onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}>
+                                {currCategory}
                             </button>
                         );
                     })}
@@ -47,16 +51,45 @@ const FilterSection = () => {
             <div className='filter-company'>
                 <h3>Company</h3>
                 <form action='#'>
-                    <select name='company' id='company' className='filter-company--select' onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}>
-                        {companyData.map((company, i) => {
+                    <select name='company' id='company' onSelect={company} className='filter-company--select' onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}>
+                        {companyData.map((currCompany, i) => {
                             return (
-                                <option value={company} key={i}>
-                                    {company}
+                                <option value={currCompany} key={i}>
+                                    {currCompany}
                                 </option>
                             );
                         })}
                     </select>
                 </form>
+            </div>
+            <div className='filter-colors colors'>
+                <h3>Colors</h3>
+                <div className='filter-color-style'>
+                    {colorsData.map((currColor, i) => {
+                        if (currColor === 'All') {
+                            return (
+                                <button type='button' key={i} name='color' onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: currColor }))}>
+                                    All
+                                </button>
+                            );
+                        }
+                        return (
+                            <button type='button' key={i} name='color' className={`btnStyle ${color === currColor ? 'active' : ''}`} style={{ backgroundColor: `${currColor}` }} onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: currColor }))}>
+                                {color === currColor ? <FaCheck className='checkStyle' /> : null}
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+            <div className='filter_price'>
+                <h3>Price</h3>
+                <p>
+                    <FormatPrice price={price >= 0 && price} />
+                </p>
+                <input type='range' name='price' min={0} max={maxPrice} value={price} onChange={(e) => dispatch(updateFilterValue({ [e.target.name]: +e.target.value }))} />
+            </div>
+            <div className='filter-clear'>
+                <Button onClick={() => dispatch(clearFilters())}>Clear filter</Button>
             </div>
         </Wrapper>
     );
@@ -129,6 +162,8 @@ const Wrapper = styled.section`
         background-color: #000;
         border-radius: 50%;
         margin-left: 1rem;
+        display: grid;
+        place-items: center;
         border: none;
         outline: none;
         opacity: 0.5;

@@ -1,30 +1,98 @@
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import CartItem from '../components/CartItem';
+import { Link } from 'react-router-dom';
+import { Button } from '../components_Styled/Button';
+import { clearCart, updateTotal } from '../store/reducers/cartSlice';
+import FormatPrice from '../Helpers/FormatPrice';
+import { useEffect } from 'react';
 
 const Cart = () => {
-    // if (cart.length === 0) {
-    //     return (
-    //         <EmptyDiv>
-    //             <h3>No Cart in Item </h3>
-    //         </EmptyDiv>
-    //     );
-    // }
-    return <Wrapper className='cart-wrapper'>Cart</Wrapper>;
+    const { cart, total_amount, shipping_fee } = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(updateTotal());
+    }, [dispatch, cart]);
+
+    if (cart.length === 0) {
+        return (
+            <EmptyDiv>
+                <h3>No Cart in Item </h3>
+            </EmptyDiv>
+        );
+    }
+    return (
+        <Wrapper className='cart-wrapper'>
+            <div className='container'>
+                <div className='cart_heading grid grid-five-column'>
+                    <p>Item</p>
+                    <p className='cart-hide'>Price</p>
+                    <p>Quantity</p>
+                    <p className='cart-hide'>Subtotal</p>
+                    <p>Remove</p>
+                </div>
+                <hr />
+                <div className='cart-item'>
+                    {cart.map((item) => {
+                        return <CartItem key={item.id} {...item} />;
+                    })}
+                </div>
+                <hr />
+                <div className='cart-two-button'>
+                    <Link to={'/products'}>
+                        <Button>continue shopping</Button>
+                    </Link>
+                    <Button className='btn-clear' onClick={() => dispatch(clearCart())}>
+                        clear cart
+                    </Button>
+                </div>
+
+                {/* ///! 0reder total Amount  */}
+                <div className='order-total--amount'>
+                    <div className='order-total--subdata'>
+                        <div>
+                            <p>subtotal</p>
+                            <p>
+                                <FormatPrice price={total_amount} />
+                            </p>
+                        </div>
+                        <div>
+                            <p>shipping fee:</p>
+                            <p>
+                                <FormatPrice price={shipping_fee} />
+                            </p>
+                        </div>
+                        <hr />
+                        <div>
+                            <p>order total:</p>
+                            <p>
+                                <FormatPrice price={total_amount + shipping_fee} />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Wrapper>
+    );
 };
 
-// const EmptyDiv = styled.div`
-//     display: grid;
-//     place-items: center;
-//     height: 50vh;
+const EmptyDiv = styled.div`
+    padding-top: 10rem;
+    display: grid;
+    place-items: center;
+    height: 50vh;
 
-//     h3 {
-//         font-size: 4.2rem;
-//         text-transform: capitalize;
-//         font-weight: 300;
-//     }
-// `;
+    h3 {
+        font-size: 4.2rem;
+        text-transform: capitalize;
+        font-weight: 300;
+    }
+`;
 
 const Wrapper = styled.section`
-    padding: 9rem 0;
+    padding: 12rem 0;
+    min-height: 80vh;
 
     .grid-four-column {
         grid-template-columns: repeat(4, 1fr);

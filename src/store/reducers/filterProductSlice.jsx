@@ -5,20 +5,20 @@ const filterProductSlice = createSlice({
     initialState: {
         allProducts: [],
         filterProducts: [],
-        textFilterData: [],
-        categoryFilterData: [],
-        companyFilterData: [],
         grid_view: true,
         sorting_value: '',
-        filters: {},
+        filters: { text: '', category: 'All', company: 'All', color: 'All', price: 0, maxPrice: 0 },
     },
     reducers: {
         setFilterProducts: (state, { payload }) => {
             state.filterProducts = payload;
             state.allProducts = payload;
-            state.textFilterData = payload;
-            state.categoryFilterData = payload;
-            state.companyFilterData = payload;
+
+            //! Find Highest Price from ALl_Products...
+            const priceArr = payload.map((product) => product.price);
+            const maxPrice = Math.max(...priceArr);
+            state.filters.price = maxPrice;
+            state.filters.maxPrice = maxPrice;
         },
         setGridView: (state, { payload }) => {
             state.grid_view = payload;
@@ -33,28 +33,19 @@ const filterProductSlice = createSlice({
             state.filters = { ...state.filters, ...payload };
 
             //! filtering Products...
-            const { text, category, company } = state.filters;
-
-            if (text) {
-                state.textFilterData = state.allProducts.filter((product) => product.name.toLowerCase().includes(text));
-                state.filterProducts = state.textFilterData;
-            } else {
-                state.filterProducts = state.allProducts;
-                // state.filters = {};
-            }
-
-            if (category) {
-                state.categoryFilterData = category === 'All' ? state.textFilterData : state.textFilterData.filter((product) => product.category === category);
-                state.filterProducts = state.categoryFilterData;
-            }
-
-            if (company) {
-                state.companyFilterData = company === 'All' ? state.categoryFilterData : state.categoryFilterData.filter((product) => product.company === company);
-                state.textFilterData = state.companyFilterData;
-            }
+            const { text, category, company, color, price, maxPrice } = state.filters;
+            state.filterProducts = state.allProducts
+                .filter((product) => (text === '' ? product : product.name.toLowerCase().includes(text)))
+                .filter((product) => (category === 'All' ? product : product.category === category))
+                .filter((product) => (company === 'All' ? product : product.company === company))
+                .filter((product) => (color === 'All' ? product : product.colors.includes(color)))
+                .filter((product) => (price === maxPrice ? product : product.price <= price));
+        },
+        clearFilters: (state) => {
+            state.filters = { ...state.filters, text: '', category: 'All', company: 'All', color: 'All', price: state.filters.maxPrice };
         },
     },
 });
 
 export default filterProductSlice.reducer;
-export const { setFilterProducts, setGridView, sorting, updateFilterValue } = filterProductSlice.actions;
+export const { setFilterProducts, setGridView, sorting, updateFilterValue, clearFilters } = filterProductSlice.actions;
