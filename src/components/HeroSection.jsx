@@ -20,7 +20,7 @@ const HeroSection = ({ name }) => {
                     {/* //! our homepae Image  */}
                     <div className='hero-section-image'>
                         <figure>
-                            <img src='/public/images/hero.jpg' alt='hero-section-image' className='img-style' />
+                            <img src='/images/hero.jpg' alt='hero-section-image' className='img-style' />
                         </figure>
                     </div>
                 </div>

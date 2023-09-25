@@ -30,7 +30,7 @@ const Header = () => {
         <MainHeader>
             <div className={`${show} main`}>
                 <Link to={'/'}>
-                    <img src='/public/images/logo.png' alt='logo' />
+                    <img src='/images/logo.png' alt='logo' />
                 </Link>
                 <Nav />
             </div>
