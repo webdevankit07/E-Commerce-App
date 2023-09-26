@@ -17,7 +17,7 @@ const Cart = () => {
         dispatch(updateTotal());
     }, [dispatch, cart]);
 
-    if (cart.length === 0) {
+    if (cart?.length === 0) {
         return (
             <EmptyDiv>
                 <h3>No Cart in Item </h3>
@@ -42,7 +42,7 @@ const Cart = () => {
                 </div>
                 <hr />
                 <div className='cart-item'>
-                    {cart.map((item) => {
+                    {cart?.map((item) => {
                         return <CartItem key={item.id} {...item} />;
                     })}
                 </div>

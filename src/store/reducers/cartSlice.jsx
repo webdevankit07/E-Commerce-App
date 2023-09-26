@@ -56,8 +56,8 @@ const cartSlice = createSlice({
             localStorage.setItem('ankitCart', JSON.stringify(state.cart));
         },
         updateTotal: (state) => {
-            const totalQuantity = state.cart.reduce((total, item) => total + item.amount, 0);
-            const totalAmount = state.cart.reduce((total, item) => total + item.price * item.amount, 0);
+            const totalQuantity = state.cart?.reduce((total, item) => total + item.amount, 0);
+            const totalAmount = state.cart?.reduce((total, item) => total + item.price * item.amount, 0);
             state.total_item = totalQuantity;
             state.total_amount = totalAmount;
         },

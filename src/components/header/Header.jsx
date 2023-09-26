@@ -52,6 +52,10 @@ const MainHeader = styled.header`
         transition: all 0.3s ease;
     }
 
+    .main img {
+        height: 30rem;
+    }
+
     .show {
         top: 0;
     }

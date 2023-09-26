@@ -108,8 +108,10 @@ const NavBar = styled.nav`
             min-height: 2.3rem;
             min-width: 2.3rem;
             padding: 0.35rem;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             position: absolute;
+            display: grid;
+            place-items: center;
             background-color: #000;
             color: #fff;
             border-radius: 50%;
