@@ -3,7 +3,7 @@
 Hi there I'm ANKIT YADAV a full stack developer with Reactjs, TypeScript, Nodejs, MongoDB
 
 
-# Web Universe - MERN Blog WebApp
+# Ankit Store - Ecommerce Project
 
 "Ankit Store" is a Front-end project build with React.
 
