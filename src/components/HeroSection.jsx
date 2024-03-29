@@ -11,8 +11,12 @@ const HeroSection = ({ name }) => {
                     <div className='hero-section-data'>
                         <p className='intro-data'>Welcome to</p>
                         <h1>{name}</h1>
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut dolore impedit ipsam et harum nemo, explicabo repellendus totam, facilis libero error quo! Non delectus perferendis totam illo labore nostrum dicta.</p>
-                        <Link>
+                        <p>
+                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut dolore impedit ipsam et harum
+                            nemo, explicabo repellendus totam, facilis libero error quo! Non delectus perferendis totam
+                            illo labore nostrum dicta.
+                        </p>
+                        <Link to={'/products'}>
                             <Button>shop now</Button>
                         </Link>
                     </div>

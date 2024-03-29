@@ -1,30 +1,15 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button } from '../components_Styled/Button';
 import { FaDiscord, FaGithub, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {
     return (
         <Wrapper>
-            <section className='contact-short'>
-                <div className='grid grid-two-column'>
-                    <div>
-                        <h3>Ready to get started?</h3>
-                        <h3>Talk to us today</h3>
-                    </div>
-                    <div>
-                        <Button>
-                            <Link>get started</Link>
-                        </Button>
-                    </div>
-                </div>
-            </section>
-
             {/* //! main footer  */}
             <footer>
                 <div className='container grid grid-four-column'>
                     <div className='footer-about'>
-                        <h3>Thapa Technical</h3>
+                        <h3>Pravin Kumar</h3>
                         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
                     </div>
                     <div className='footer-subscribe'>
@@ -38,17 +23,17 @@ const Footer = () => {
                         <h3>Follow Us</h3>
                         <div className='footer-social--icons'>
                             <div>
-                                <Link to={'https://discordapp.com/users/webdev#2565'} target='_blank'>
+                                <Link to={'#'} target='_blank'>
                                     <FaDiscord className='icons' />
                                 </Link>
                             </div>
                             <div>
-                                <Link to={'https://github.com/thapatechnical/thapareactecom/tree/ecom_frontendDone_v55'} target='_blank'>
+                                <Link to={'#'} target='_blank'>
                                     <FaGithub className='icons' />
                                 </Link>
                             </div>
                             <div>
-                                <Link to={'https://www.youtube.com/ThapaTechnical/'} target='_blank'>
+                                <Link to={'#'} target='_blank'>
                                     <FaYoutube className='icons' />
                                 </Link>
                             </div>
@@ -61,7 +46,7 @@ const Footer = () => {
                     </div>
                     <div className='footer-contact'>
                         <h3>Call Us</h3>
-                        <a href='tel:9304661037' className='text-white text-2xl'>
+                        <a href='tel:9304661037' className='text-2xl text-white'>
                             +91 9304661037
                         </a>
                     </div>
