@@ -10,14 +10,14 @@ const cartSlice = createSlice({
     },
     reducers: {
         addToCart: (state, { payload }) => {
-            const { id, color, amount, product } = payload;
+            const { id, amount, product } = payload;
 
             //! tackle existing product..
-            const existingProduct = state.cart.find((item) => item.id === id + color);
+            const existingProduct = state.cart.find((item) => item.id === id);
 
             if (existingProduct) {
                 let updatedProduct = state.cart.map((item) => {
-                    if (item.id === id + color) {
+                    if (item.id === id) {
                         let newAmount = item.amount + amount;
                         newAmount = newAmount >= item.max ? item.max : newAmount;
                         return { ...item, amount: newAmount };
@@ -28,11 +28,10 @@ const cartSlice = createSlice({
                 state.cart = updatedProduct;
             } else {
                 const cartProduct = {
-                    id: id + color,
-                    name: product.name,
-                    color,
+                    id: id,
+                    name: product.title,
                     amount,
-                    image: product.image[0].url,
+                    image: product.thumbnail,
                     price: product.price,
                     max: product.stock,
                 };

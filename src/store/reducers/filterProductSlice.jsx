@@ -7,7 +7,7 @@ const filterProductSlice = createSlice({
         filterProducts: [],
         grid_view: true,
         sorting_value: '',
-        filters: { text: '', category: 'All', company: 'All', color: 'All', price: 0, maxPrice: 0 },
+        filters: { text: '', category: 'All', brand: 'All', color: 'All', price: 0, maxPrice: 0 },
     },
     reducers: {
         setFilterProducts: (state, { payload }) => {
@@ -27,22 +27,38 @@ const filterProductSlice = createSlice({
             state.sorting_value = payload;
 
             //! Sorting Products...
-            state.filterProducts.sort((a, b) => (payload === 'lowest' ? a.price - b.price : payload === 'highest' ? b.price - a.price : payload === 'a-z' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)));
+            state.filterProducts.sort((a, b) =>
+                payload === 'lowest'
+                    ? a.price - b.price
+                    : payload === 'highest'
+                    ? b.price - a.price
+                    : payload === 'a-z'
+                    ? a.name.localeCompare(b.name)
+                    : b.name.localeCompare(a.name)
+            );
         },
         updateFilterValue: (state, { payload }) => {
             state.filters = { ...state.filters, ...payload };
 
             //! filtering Products...
-            const { text, category, company, color, price, maxPrice } = state.filters;
+            const { text, category, brand, color, price, maxPrice } = state.filters;
+            console.log(brand);
             state.filterProducts = state.allProducts
-                .filter((product) => (text === '' ? product : product.name.toLowerCase().includes(text)))
+                .filter((product) => (text === '' ? product : product.title.toLowerCase().includes(text)))
                 .filter((product) => (category === 'All' ? product : product.category === category))
-                .filter((product) => (company === 'All' ? product : product.company === company))
+                .filter((product) => (brand === 'All' ? product : product.brand === brand))
                 .filter((product) => (color === 'All' ? product : product.colors.includes(color)))
                 .filter((product) => (price === maxPrice ? product : product.price <= price));
         },
         clearFilters: (state) => {
-            state.filters = { ...state.filters, text: '', category: 'All', company: 'All', color: 'All', price: state.filters.maxPrice };
+            state.filters = {
+                ...state.filters,
+                text: '',
+                category: 'All',
+                company: 'All',
+                color: 'All',
+                price: state.filters.maxPrice,
+            };
         },
     },
 });

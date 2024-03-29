@@ -33,7 +33,7 @@ const Cart = () => {
                         <h2 className='cart-user--name'>{user.name}</h2>
                     </div>
                 )}
-                <div className='cart_heading grid grid-five-column'>
+                <div className='grid cart_heading grid-five-column'>
                     <p>Item</p>
                     <p className='cart-hide'>Price</p>
                     <p>Quantity</p>

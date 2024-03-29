@@ -1,14 +1,40 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Product from './Product';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const GridView = ({ products }) => {
+    const { filterProducts } = useSelector((state) => state.filterProducts);
+    const [prevLimit, setPrevLimit] = useState(0);
+    const [limit, setLimit] = useState(9);
+
     return (
         <Wrapper className='section'>
             <div className='container grid grid-three-column'>
-                {products.map((product) => {
+                {products.slice(prevLimit, limit).map((product) => {
                     return <Product key={product.id} {...product} />;
                 })}
+            </div>
+            <div className='btnContainer'>
+                <button
+                    disabled={prevLimit <= 0}
+                    onClick={() => {
+                        setPrevLimit(prevLimit - 9);
+                        setLimit(limit - 9);
+                    }}
+                >
+                    Prev
+                </button>
+                <button
+                    disabled={limit >= filterProducts.length - 5}
+                    onClick={() => {
+                        setPrevLimit(limit);
+                        setLimit(limit + 9);
+                    }}
+                >
+                    Next
+                </button>
             </div>
         </Wrapper>
     );
@@ -106,6 +132,23 @@ const Wrapper = styled.section`
                 color: rgb(98 84 243);
                 font-size: 1.4rem;
             }
+        }
+    }
+    .btnContainer {
+        margin-top: 50px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 30px;
+        button {
+            background-color: #6254f3;
+            color: white;
+            padding: 5px 20px;
+            font-size: 2rem;
+            border-radius: 5px;
+        }
+        button[disabled] {
+            background-color: #b7b4d0;
+            color: black;
         }
     }
 `;

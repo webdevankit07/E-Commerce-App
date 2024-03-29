@@ -6,9 +6,9 @@ const PRODUCTS_API = import.meta.env.VITE_PRODUCT_API_KEY;
 //! fetching all products from api...
 export const getProducts = createAsyncThunk('getProducts', async (rejectWithValue) => {
     try {
-        const { data } = await axios.get(PRODUCTS_API);
-        const featureData = data.filter((e) => e.featured === true);
-        return { data, featureData };
+        const { data } = await axios.get(`${PRODUCTS_API}?limit=0`);
+        const featureProduct = data.products.slice(Math.random() * 100).slice(0, 3);
+        return { data: data.products, featureProduct };
     } catch (error) {
         return rejectWithValue(error);
     }
@@ -17,7 +17,7 @@ export const getProducts = createAsyncThunk('getProducts', async (rejectWithValu
 //! fetching Single product from api...
 export const getSingleProduct = createAsyncThunk('getSingleProduct', async (id, { rejectWithValue }) => {
     try {
-        const { data } = await axios.get(`${PRODUCTS_API}?id=${id}`);
+        const { data } = await axios.get(`${PRODUCTS_API}/${id}`);
         return data;
     } catch (error) {
         return rejectWithValue(error);
@@ -42,7 +42,7 @@ const products = createSlice({
             .addCase(getProducts.fulfilled, (state, { payload }) => {
                 state.isLoading = false;
                 state.products = payload.data;
-                state.featureProducts = payload.featureData;
+                state.featureProducts = payload.featureProduct;
             })
             .addCase(getProducts.rejected, (state, { payload }) => {
                 state.isLoading = false;

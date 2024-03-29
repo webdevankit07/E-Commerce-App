@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { FaCheck } from 'react-icons/fa';
 import CartAmountToggle from './CartAmountToggle';
 import { Link } from 'react-router-dom';
 import { Button } from '../components_Styled/Button';
@@ -9,8 +8,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/reducers/cartSlice';
 
 const AddToCart = ({ product }) => {
-    const { id, colors, stock } = product;
-    const [color, setColor] = useState(colors[0]);
+    const { id, stock } = product;
     const [amount, setAmount] = useState(1);
     const dispatch = useDispatch();
 
@@ -19,22 +17,9 @@ const AddToCart = ({ product }) => {
 
     return (
         <Wrapper>
-            <div className='colors'>
-                <p>
-                    Colors:{' '}
-                    {colors.map((currColor, i) => {
-                        return (
-                            <button key={i} style={{ backgroundColor: currColor }} className={color === currColor ? 'btnStyle active' : 'btnStyle'} onClick={() => setColor(currColor)}>
-                                {color === currColor ? <FaCheck className='checkStyle' /> : null}
-                            </button>
-                        );
-                    })}
-                </p>
-            </div>
-
             {/* Add to Cart  */}
             <CartAmountToggle amount={amount} setDecrease={setDecrease} setIncrease={setIncrease} />
-            <Link to={'/cart'} onClick={() => dispatch(addToCart({ id, color, amount, product }))}>
+            <Link to={'/cart'} onClick={() => dispatch(addToCart({ id, amount, product }))}>
                 <Button className='btn'>Add to Cart</Button>
             </Link>
         </Wrapper>

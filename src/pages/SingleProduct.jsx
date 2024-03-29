@@ -21,7 +21,7 @@ const SingleProduct = () => {
     useEffect(() => {
         dispatch(getSingleProduct(Id));
     }, [dispatch, Id]);
-    const { id, name, company, price, description, stock, stars, reviews, image } = singleProduct;
+    const { id, title, brand, price, description, stock, rating, reviews, images } = singleProduct;
 
     if (isLoading) {
         return (
@@ -40,19 +40,27 @@ const SingleProduct = () => {
                 <div className='grid grid-two-column'>
                     {/* Product Image */}
                     <div className='product_images'>
-                        <MyImage images={image} />
+                        <MyImage images={images} />
                     </div>
 
                     {/* Product Data  */}
                     <div className='product-data'>
-                        <h2>{name}</h2>
-                        <p className='flex gap-5 items-center'>
-                            <ReactStars count={5} value={stars} half={true} edit={false} size={20} color2={'#ffd700'} />({reviews} Customer reviews)
-                        </p>
+                        <h2>{title}</h2>
+                        <div className='flex items-center gap-5'>
+                            <ReactStars
+                                count={5}
+                                value={rating}
+                                half={true}
+                                edit={false}
+                                size={20}
+                                color2={'#ffd700'}
+                            />
+                            ({reviews} Customer reviews)
+                        </div>
                         <p className='product-data-price'>
                             MRP:
                             <del>
-                                <FormatPrice price={price + 2500} />
+                                <FormatPrice price={price + 30} />
                             </del>
                         </p>
                         <p className='product-data-price product-data-real-price'>
@@ -79,13 +87,13 @@ const SingleProduct = () => {
                         </div>
                         <div className='product-data-info'>
                             <p>
-                                Avaliable: <span>{stock > 0 ? 'In stock' : 'Not Available'}</span>
+                                Avaliable: <span>{stock > 0 ? `In stock (${stock})` : 'Not Available'}</span>
                             </p>
                             <p>
                                 ID: <span>{id}</span>
                             </p>
                             <p>
-                                Brand: <span>{company}</span>
+                                Brand: <span>{brand}</span>
                             </p>
                         </div>
                         <hr />

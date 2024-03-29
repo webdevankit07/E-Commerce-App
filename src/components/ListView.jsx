@@ -3,20 +3,26 @@ import styled from 'styled-components';
 import FormatPrice from '../Helpers/FormatPrice';
 import { Link } from 'react-router-dom';
 import { Button } from '../components_Styled/Button';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 const ListView = ({ products }) => {
+    const { filterProducts } = useSelector((state) => state.filterProducts);
+    const [prevLimit, setPrevLimit] = useState(0);
+    const [limit, setLimit] = useState(9);
+
     return (
         <Wrapper>
             <div className='container grid'>
-                {products.map((product) => {
-                    const { id, name, image, price, description } = product;
+                {products.slice(prevLimit, limit).map((product) => {
+                    const { id, title, thumbnail, price, description } = product;
                     return (
-                        <div key={id} className='card grid grid-two-column'>
+                        <div key={id} className='grid card grid-two-column'>
                             <figure>
-                                <img src={image} alt={name} />
+                                <img src={thumbnail} alt={title} />
                             </figure>
                             <div className='card-data'>
-                                <h3>{name}</h3>
+                                <h3>{title}</h3>
                                 <p>{<FormatPrice price={price} />}</p>
                                 <p>{description.slice(0, 100)}...</p>
                                 <Link to={`/single-product/${id}`}>
@@ -26,6 +32,26 @@ const ListView = ({ products }) => {
                         </div>
                     );
                 })}
+            </div>
+            <div className='btnContainer'>
+                <button
+                    disabled={prevLimit <= 0}
+                    onClick={() => {
+                        setPrevLimit(prevLimit - 9);
+                        setLimit(limit - 9);
+                    }}
+                >
+                    Prev
+                </button>
+                <button
+                    disabled={limit >= filterProducts.length - 5}
+                    onClick={() => {
+                        setPrevLimit(limit);
+                        setLimit(limit + 9);
+                    }}
+                >
+                    Next
+                </button>
             </div>
         </Wrapper>
     );
@@ -48,13 +74,13 @@ const Wrapper = styled.section`
     }
 
     figure {
-        width: auto;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
         overflow: hidden;
         transition: all 0.5s linear;
+
         &::after {
             content: '';
             position: absolute;
@@ -116,6 +142,24 @@ const Wrapper = styled.section`
 
         .btn-main .btn:hover {
             color: #fff;
+        }
+    }
+
+    .btnContainer {
+        margin-top: 50px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 30px;
+        button {
+            background-color: #6254f3;
+            color: white;
+            padding: 5px 20px;
+            font-size: 2rem;
+            border-radius: 5px;
+        }
+        button[disabled] {
+            background-color: #b7b4d0;
+            color: black;
         }
     }
 `;
