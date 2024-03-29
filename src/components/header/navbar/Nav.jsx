@@ -4,13 +4,10 @@ import { CgMenu, CgClose } from 'react-icons/cg';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
-import { useAuth0 } from '@auth0/auth0-react';
-import { Button } from '../../../components_Styled/Button';
 
 const Nav = () => {
     const { total_item } = useSelector((state) => state.cart);
     const [menuIcon, setMenuIcon] = useState(false);
-    const { user, loginWithRedirect, isAuthenticated, logout } = useAuth0();
 
     return (
         <NavBar>
@@ -36,8 +33,6 @@ const Nav = () => {
                             Contact
                         </Link>
                     </li>
-                    {isAuthenticated && <p>{user.name}</p>}
-                    <li>{isAuthenticated ? <Button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log Out</Button> : <Button onClick={() => loginWithRedirect()}>Log In</Button>}</li>
                     <li>
                         <Link to={'/cart'} className='navbar-link cart-trolley--link'>
                             <FiShoppingCart className='cart-trolley' />
@@ -49,7 +44,11 @@ const Nav = () => {
                 {/* two buttons for  open and close menu  */}
                 <div className='mobile-navbar-btn'>
                     <CgMenu name='menu-outline' className='mobile-nav-icon' onClick={() => setMenuIcon(true)} />
-                    <CgClose name='close-outline' className='mobile-nav-icon close-outline' onClick={() => setMenuIcon(false)} />
+                    <CgClose
+                        name='close-outline'
+                        className='mobile-nav-icon close-outline'
+                        onClick={() => setMenuIcon(false)}
+                    />
                 </div>
             </div>
         </NavBar>
