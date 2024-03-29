@@ -13,7 +13,7 @@ const cartSlice = createSlice({
             const { id, amount, product } = payload;
 
             //! tackle existing product..
-            const existingProduct = state.cart.find((item) => item.id === id);
+            const existingProduct = state.cart?.find((item) => item.id === id);
 
             if (existingProduct) {
                 let updatedProduct = state.cart.map((item) => {
@@ -72,6 +72,7 @@ const cartSlice = createSlice({
         },
         clearCart: (state) => {
             state.cart = [];
+            localStorage.setItem('ankitCart', JSON.stringify(state.cart));
         },
     },
 });
