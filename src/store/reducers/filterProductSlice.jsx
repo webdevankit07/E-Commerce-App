@@ -42,7 +42,6 @@ const filterProductSlice = createSlice({
 
             //! filtering Products...
             const { text, category, brand, color, price, maxPrice } = state.filters;
-            console.log(brand);
             state.filterProducts = state.allProducts
                 .filter((product) => (text === '' ? product : product.title.toLowerCase().includes(text)))
                 .filter((product) => (category === 'All' ? product : product.category === category))

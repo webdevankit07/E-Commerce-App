@@ -13,7 +13,10 @@ const cartSlice = createSlice({
             const { id, amount, product } = payload;
 
             //! tackle existing product..
-            const existingProduct = state.cart?.find((item) => item.id === id);
+            let existingProduct;
+            if (state.cart && state.cart.length) {
+                existingProduct = state.cart.find((item) => item.id === id);
+            }
 
             if (existingProduct) {
                 let updatedProduct = state.cart.map((item) => {
@@ -26,6 +29,7 @@ const cartSlice = createSlice({
                     }
                 });
                 state.cart = updatedProduct;
+                localStorage.setItem('ankitCart', JSON.stringify(state.cart));
             } else {
                 const cartProduct = {
                     id: id,
@@ -35,11 +39,13 @@ const cartSlice = createSlice({
                     price: product.price,
                     max: product.stock,
                 };
-                state.cart = [...state.cart, cartProduct];
+                if (state.cart !== null) {
+                    state.cart = [...state.cart, cartProduct];
+                } else {
+                    state.cart = [cartProduct];
+                }
+                localStorage.setItem('ankitCart', JSON.stringify(state.cart));
             }
-
-            //! update Loacl Storage & cart...
-            localStorage.setItem('ankitCart', JSON.stringify(state.cart));
         },
         updateQuantity: (state, { payload }) => {
             const updateCartProduct = state.cart.map((item) => {

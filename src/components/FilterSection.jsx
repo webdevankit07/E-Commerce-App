@@ -49,7 +49,7 @@ const FilterSection = () => {
                             <button
                                 key={i}
                                 type='button'
-                                className={currCategory === category && 'active'}
+                                className={`${currCategory === category && 'active'}`}
                                 value={currCategory}
                                 name='category'
                                 onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}
@@ -140,10 +140,10 @@ const Wrapper = styled.section`
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            height: 500px;
+            height: 330px;
             overflow-x: hidden;
             overflow-y: scroll;
-            gap: 1.4rem;
+            gap: 0.8rem;
 
             button {
                 border: none;
