@@ -40,6 +40,7 @@ const Header = () => {
 
 const MainHeader = styled.header`
     .main {
+        overflow: hidden;
         position: fixed;
         width: 100%;
         padding: 0 4.8rem;
@@ -53,7 +54,7 @@ const MainHeader = styled.header`
     }
 
     .main img {
-        height: 30rem;
+        width: 25rem;
     }
 
     .show {
