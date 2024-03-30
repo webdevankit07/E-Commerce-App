@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { clearFilters, updateFilterValue } from '../store/reducers/filterProductSlice';
-import { FaCheck } from 'react-icons/fa';
 import FormatPrice from '../Helpers/FormatPrice';
 import { useEffect } from 'react';
 import { Button } from '../components_Styled/Button';
@@ -22,8 +21,7 @@ const FilterSection = () => {
         return attr === 'colors' ? ['All', ...new Set(newVal.flat(2))] : ['All', ...new Set(newVal)];
     };
     const categoryData = getUniqueData(allProducts, 'category');
-    const companyData = getUniqueData(allProducts, 'company');
-    const colorsData = getUniqueData(allProducts, 'colors');
+    const companyData = getUniqueData(allProducts, 'brand');
 
     useEffect(() => {
         dispatch(updateFilterValue());
@@ -33,7 +31,14 @@ const FilterSection = () => {
         <Wrapper>
             <div className='filter-search'>
                 <form onSubmit={(e) => e.preventDefault()}>
-                    <input autoComplete='off' type='text' name='text' value={text} placeholder='search' onChange={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))} />
+                    <input
+                        autoComplete='off'
+                        type='text'
+                        name='text'
+                        value={text}
+                        placeholder='search'
+                        onChange={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}
+                    />
                 </form>
             </div>
             <div className='filter-category'>
@@ -41,17 +46,30 @@ const FilterSection = () => {
                 <div>
                     {categoryData.map((currCategory, i) => {
                         return (
-                            <button key={i} type='button' className={currCategory === category && 'active'} value={currCategory} name='category' onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}>
+                            <button
+                                key={i}
+                                type='button'
+                                className={`${currCategory === category && 'active'}`}
+                                value={currCategory}
+                                name='category'
+                                onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}
+                            >
                                 {currCategory}
                             </button>
                         );
                     })}
                 </div>
             </div>
-            <div className='filter-company'>
+            <div className='filter-company w-96'>
                 <h3>Company</h3>
                 <form action='#'>
-                    <select name='company' id='company' onSelect={company} className='filter-company--select' onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}>
+                    <select
+                        name='brand'
+                        id='company'
+                        onSelect={company}
+                        className='w-full filter-company--select'
+                        onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: e.target.value }))}
+                    >
                         {companyData.map((currCompany, i) => {
                             return (
                                 <option value={currCompany} key={i}>
@@ -62,31 +80,19 @@ const FilterSection = () => {
                     </select>
                 </form>
             </div>
-            <div className='filter-colors colors'>
-                <h3>Colors</h3>
-                <div className='filter-color-style'>
-                    {colorsData.map((currColor, i) => {
-                        if (currColor === 'All') {
-                            return (
-                                <button type='button' key={i} name='color' onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: currColor }))}>
-                                    All
-                                </button>
-                            );
-                        }
-                        return (
-                            <button type='button' key={i} name='color' className={`btnStyle ${color === currColor ? 'active' : ''}`} style={{ backgroundColor: `${currColor}` }} onClick={(e) => dispatch(updateFilterValue({ [e.target.name]: currColor }))}>
-                                {color === currColor ? <FaCheck className='checkStyle' /> : null}
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
-            <div className='filter_price'>
+            <div className='w-full filter_price'>
                 <h3>Price</h3>
                 <p>
                     <FormatPrice price={price >= 0 && price} />
                 </p>
-                <input type='range' name='price' min={0} max={maxPrice} value={price} onChange={(e) => dispatch(updateFilterValue({ [e.target.name]: +e.target.value }))} />
+                <input
+                    type='range'
+                    name='price'
+                    min={0}
+                    max={maxPrice}
+                    value={price}
+                    onChange={(e) => dispatch(updateFilterValue({ [e.target.name]: +e.target.value }))}
+                />
             </div>
             <div className='filter-clear'>
                 <Button onClick={() => dispatch(clearFilters())}>Clear filter</Button>
@@ -114,11 +120,30 @@ const Wrapper = styled.section`
     }
 
     .filter-category {
+        width: 100%;
+        ::-webkit-scrollbar {
+            width: 1.5rem;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #5e76ed;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #e7e1e1;
+            border: 5px solid transparent;
+            border-radius: 9px;
+            background-clip: content-box;
+        }
+
         div {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 1.4rem;
+            height: 330px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            gap: 0.8rem;
 
             button {
                 border: none;

@@ -4,22 +4,27 @@ import styled from 'styled-components';
 
 const MyImage = ({ images }) => {
     const [imgId, setImgId] = useState(0);
+
     return (
         images && (
             <Wrapper>
-                <div className='grid grid-four-column'>
-                    {images.map((image, i) => {
-                        const { id, url, filename } = image;
+                <div className='flex-col imageItem w-72'>
+                    {images.slice(0, 3).map((imageUrl, i) => {
                         return (
-                            <figure key={id}>
-                                <img src={url} alt={filename} className='box-imagr--style' onClick={() => setImgId(i)} />
+                            <figure key={i}>
+                                <img
+                                    src={imageUrl}
+                                    alt={`${imageUrl}`}
+                                    className='box-imagr--style'
+                                    onClick={() => setImgId(i)}
+                                />
                             </figure>
                         );
                     })}
                 </div>
 
                 <div className='main-screen'>
-                    <img src={images[`${imgId}`].url} alt={images[`${imgId}`].filename} />
+                    <img src={images[`${imgId}`]} alt={images[`${imgId}`].filename} />
                 </div>
             </Wrapper>
         )
@@ -31,31 +36,22 @@ MyImage.propTypes = {
 };
 
 const Wrapper = styled.section`
-    display: grid;
-    grid-template-columns: 0.4fr 1fr;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
 
-    .grid {
-        flex-direction: row;
-        justify-items: center;
-        align-items: center;
-        width: 100%;
-        gap: 1rem;
-        /* order: 2; */
-
-        img {
-            max-width: 100%;
-            max-height: 100%;
-            background-size: cover;
-            object-fit: contain;
-            cursor: pointer;
-            box-shadow: ${({ theme }) => theme.colors.shadow};
-        }
+    img {
+        background-size: cover;
+        object-fit: contain;
+        cursor: pointer;
+        border: 1px solid #b9b9b9;
+        margin: 10px;
+        /* box-shadow: ${({ theme }) => theme.colors.shadow}; */
     }
 
     .main-screen {
-        display: grid;
-        place-items: center;
+        width: 100%;
         order: 1;
         img {
             max-width: 100%;

@@ -6,12 +6,10 @@ import { Button } from '../components_Styled/Button';
 import { clearCart, updateTotal } from '../store/reducers/cartSlice';
 import FormatPrice from '../Helpers/FormatPrice';
 import { useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 
 const Cart = () => {
     const { cart, total_amount, shipping_fee } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
-    const { user, isAuthenticated } = useAuth0();
 
     useEffect(() => {
         dispatch(updateTotal());
@@ -27,13 +25,7 @@ const Cart = () => {
     return (
         <Wrapper className='cart-wrapper'>
             <div className='container'>
-                {isAuthenticated && (
-                    <div className='cart-user--profile'>
-                        <img src={user.profile} alt={user.name} />
-                        <h2 className='cart-user--name'>{user.name}</h2>
-                    </div>
-                )}
-                <div className='cart_heading grid grid-five-column'>
+                <div className='grid cart_heading grid-five-column'>
                     <p>Item</p>
                     <p className='cart-hide'>Price</p>
                     <p>Quantity</p>

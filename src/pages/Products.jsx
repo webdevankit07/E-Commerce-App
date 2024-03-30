@@ -25,7 +25,7 @@ const Products = () => {
 };
 
 const Wrapper = styled.section`
-    padding: 15rem 0 0 0;
+    padding: 15rem 0 6rem 0;
 
     .grid-filter-column {
         grid-template-columns: 0.2fr 1fr;

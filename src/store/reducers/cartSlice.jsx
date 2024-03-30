@@ -10,14 +10,17 @@ const cartSlice = createSlice({
     },
     reducers: {
         addToCart: (state, { payload }) => {
-            const { id, color, amount, product } = payload;
+            const { id, amount, product } = payload;
 
             //! tackle existing product..
-            const existingProduct = state.cart.find((item) => item.id === id + color);
+            let existingProduct;
+            if (state.cart && state.cart.length) {
+                existingProduct = state.cart.find((item) => item.id === id);
+            }
 
             if (existingProduct) {
                 let updatedProduct = state.cart.map((item) => {
-                    if (item.id === id + color) {
+                    if (item.id === id) {
                         let newAmount = item.amount + amount;
                         newAmount = newAmount >= item.max ? item.max : newAmount;
                         return { ...item, amount: newAmount };
@@ -26,21 +29,23 @@ const cartSlice = createSlice({
                     }
                 });
                 state.cart = updatedProduct;
+                localStorage.setItem('ankitCart', JSON.stringify(state.cart));
             } else {
                 const cartProduct = {
-                    id: id + color,
-                    name: product.name,
-                    color,
+                    id: id,
+                    name: product.title,
                     amount,
-                    image: product.image[0].url,
+                    image: product.thumbnail,
                     price: product.price,
                     max: product.stock,
                 };
-                state.cart = [...state.cart, cartProduct];
+                if (state.cart !== null) {
+                    state.cart = [...state.cart, cartProduct];
+                } else {
+                    state.cart = [cartProduct];
+                }
+                localStorage.setItem('ankitCart', JSON.stringify(state.cart));
             }
-
-            //! update Loacl Storage & cart...
-            localStorage.setItem('ankitCart', JSON.stringify(state.cart));
         },
         updateQuantity: (state, { payload }) => {
             const updateCartProduct = state.cart.map((item) => {
@@ -73,6 +78,7 @@ const cartSlice = createSlice({
         },
         clearCart: (state) => {
             state.cart = [];
+            localStorage.setItem('ankitCart', JSON.stringify(state.cart));
         },
     },
 });

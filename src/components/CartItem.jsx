@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import FormatPrice from '../Helpers/FormatPrice';
 import CartAmountToggle from './CartAmountToggle';
@@ -5,7 +6,7 @@ import { FaTrash } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from '../store/reducers/cartSlice';
 
-const CartItem = ({ id, name, image, color, price, amount, max }) => {
+const CartItem = ({ id, name, image, price, amount, max }) => {
     const [Amount, setAmount] = useState(amount);
     const dispatch = useDispatch();
 
@@ -17,7 +18,7 @@ const CartItem = ({ id, name, image, color, price, amount, max }) => {
     }, [Amount, dispatch, id]);
 
     return (
-        <div className='cart_heading grid grid-five-column'>
+        <div className='grid cart_heading grid-five-column'>
             <div className='cart-image--name'>
                 <div>
                     <figure>
@@ -26,10 +27,6 @@ const CartItem = ({ id, name, image, color, price, amount, max }) => {
                 </div>
                 <div>
                     <p>{name}</p>
-                    <div className='color-div'>
-                        <p>color:</p>
-                        <div className='color-style' style={{ backgroundColor: color, color: color }}></div>
-                    </div>
                 </div>
             </div>
 
@@ -58,6 +55,15 @@ const CartItem = ({ id, name, image, color, price, amount, max }) => {
             </div>
         </div>
     );
+};
+
+CartItem.propTypes = {
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    amount: PropTypes.number.isRequired,
+    max: PropTypes.number.isRequired,
 };
 
 export default CartItem;
